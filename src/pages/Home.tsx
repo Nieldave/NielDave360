@@ -154,8 +154,8 @@ const Home = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { label: 'Projects', value: '10+' },
-              { label: 'Technologies', value: '20+' },
-              { label: 'Experience', value: '2+ Years' },
+              { label: 'Technologies', value: '10+' },
+              // { label: 'Experience', value: ' Years' },
               { label: 'CGPA', value: '7.73' },
             ].map((stat, index) => (
               <div
