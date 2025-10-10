@@ -110,7 +110,7 @@ const Achievements = () => {
               { label: 'Competitions', value: '4+', icon: Trophy },
               { label: 'Gold Medals', value: '1', icon: Medal },
               { label: 'Silver Medals', value: '1', icon: Medal },
-              { label: 'National Level', value: '2', icon: Award },
+              { label: 'National Level', value: '1', icon: Award },
             ].map((stat, index) => (
               <div
                 key={index}

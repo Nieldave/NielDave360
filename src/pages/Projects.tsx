@@ -357,7 +357,7 @@ const Projects = () => {
             Want to see more of my work?
           </p>
           <a
-            href="https://github.com"
+            href="https://github.com/Nieldave"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-primary text-primary-foreground rounded-lg font-medium shadow-glow hover:shadow-glow-lg transition-all duration-300"
