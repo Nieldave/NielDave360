@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Download, Github, Linkedin, Mail, Code2 } from 'lucide-react';
 import profileImage from '@/assets/profile.jpg';
+import CursorFollowingRobot from '@/pages/CursorFollowingRobot';
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -22,6 +23,9 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
+      <div className="pt-20">
+    <CursorFollowingRobot />
+  </div>
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Animated Background */}
