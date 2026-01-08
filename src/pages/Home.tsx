@@ -23,9 +23,8 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="pt-20">
-    <CursorFollowingRobot />
-  </div>
+      <CursorFollowingRobot />
+      
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Animated Background */}
