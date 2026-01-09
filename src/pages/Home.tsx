@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Download, Github, Linkedin, Mail, Code2 } from 'lucide-react';
 import profileImage from '@/assets/profile.jpg';
@@ -6,6 +6,7 @@ import CursorFollowingRobot from '@/pages/CursorFollowingRobot';
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -21,9 +22,24 @@ const Home = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      // REVERSED: When scrolling DOWN the page, robot should SHRINK
+      // When scrolling UP to top, robot should GROW back
+      const scrollThreshold = 200;
+      setIsScrolled(window.scrollY < scrollThreshold); // REVERSED the condition
+    };
+
+    // Initial check
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="min-h-screen">
-      <CursorFollowingRobot />
+      <CursorFollowingRobot isScrolled={isScrolled} />
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -158,7 +174,6 @@ const Home = () => {
             {[
               { label: 'Projects', value: '10+' },
               { label: 'Technologies', value: '10+' },
-              // { label: 'Experience', value: ' Years' },
               { label: 'CGPA', value: '7.73' },
             ].map((stat, index) => (
               <div

@@ -1,12 +1,36 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
-const CursorFollowingRobot = () => {
+interface CursorFollowingRobotProps {
+  isScrolled?: boolean;
+}
+
+const CursorFollowingRobot = ({ isScrolled = false }: CursorFollowingRobotProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const headRef = useRef<THREE.Group | null>(null);
   const eyesRef = useRef<THREE.Group | null>(null);
   const mouse = useRef({ x: 0, y: 0 });
   const [blink, setBlink] = useState(false);
+  const [navPos, setNavPos] = useState({ top: 12, left: '50%' });
+
+  // Measure actual navbar position
+  useEffect(() => {
+    const nav = document.getElementById('navbar');
+    if (!nav) return;
+
+    const updateNavPos = () => {
+      const rect = nav.getBoundingClientRect();
+      // Center of navbar (mid point)
+      setNavPos({
+        top: rect.top + rect.height / 2,
+        left: `${rect.left + rect.width / 2}px`,
+      });
+    };
+
+    updateNavPos();
+    window.addEventListener('resize', updateNavPos);
+    return () => window.removeEventListener('resize', updateNavPos);
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -340,11 +364,12 @@ const CursorFollowingRobot = () => {
       const t = clock.getElapsedTime();
 
       if (headRef.current) {
-        const targetY = mouse.current.x * 0.25;
-        const targetX = mouse.current.y * 0.18;
+        // More flexible and accurate mouse tracking
+        const targetY = mouse.current.x * 0.4; // Increased from 0.25 for more movement
+        const targetX = mouse.current.y * 0.3; // Increased from 0.18 for more movement
         
-        headRef.current.rotation.y += (targetY - headRef.current.rotation.y) * 0.06;
-        headRef.current.rotation.x += (targetX - headRef.current.rotation.x) * 0.06;
+        headRef.current.rotation.y += (targetY - headRef.current.rotation.y) * 0.1; // Increased from 0.06 for faster response
+        headRef.current.rotation.x += (targetX - headRef.current.rotation.x) * 0.1;
         headRef.current.position.y = Math.sin(t * 1.3) * 0.06;
       }
 
@@ -362,7 +387,7 @@ const CursorFollowingRobot = () => {
         containerRef.current.removeChild(renderer.domElement);
       }
     };
-  }, []);
+  }, [isScrolled]);
 
   useEffect(() => {
     if (!eyesRef.current) return;
@@ -370,7 +395,18 @@ const CursorFollowingRobot = () => {
   }, [blink]);
 
   return (
-    <div className="fixed top-16 left-1/2 -translate-x-1/2 w-[280px] h-[280px] pointer-events-none z-50">
+    <div 
+      className="fixed pointer-events-none z-50 transition-all duration-700 ease-in-out"
+      style={{
+        top: !isScrolled ? `${navPos.top}px` : '140px', // FLIPPED: not scrolled = navbar, scrolled = hero
+        left: !isScrolled ? navPos.left : '50%',
+        transform: !isScrolled
+          ? 'translate(-50%, -50%) scale(0.28)'
+          : 'translate(-50%, 0) scale(1)',
+        width: '280px',
+        height: '280px',
+      }}
+    >
       <div ref={containerRef} className="w-full h-full" />
     </div>
   );
