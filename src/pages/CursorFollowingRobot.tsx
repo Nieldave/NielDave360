@@ -12,6 +12,31 @@ const CursorFollowingRobot = ({ isScrolled = false }: CursorFollowingRobotProps)
   const mouse = useRef({ x: 0, y: 0 });
   const [blink, setBlink] = useState(false);
   const [navPos, setNavPos] = useState({ top: 12, left: '50%' });
+  const [isMobile, setIsMobile] = useState(false);
+  const [showHello, setShowHello] = useState(true);
+  const [hasShownHello, setHasShownHello] = useState(false);
+
+  // Show HELLO for 2.5 seconds on initial load
+  useEffect(() => {
+    if (!hasShownHello) {
+      setShowHello(true);
+      const timer = setTimeout(() => {
+        setShowHello(false);
+        setHasShownHello(true);
+      }, 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [hasShownHello]);
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Measure actual navbar position
   useEffect(() => {
@@ -20,16 +45,20 @@ const CursorFollowingRobot = ({ isScrolled = false }: CursorFollowingRobotProps)
 
     const updateNavPos = () => {
       const rect = nav.getBoundingClientRect();
-      // Center of navbar (mid point)
+      // Position at the vertical center of navbar, shifted left
       setNavPos({
         top: rect.top + rect.height / 2,
-        left: `${rect.left + rect.width / 2}px`,
+        left: `${rect.left + rect.width / 2 - 600}px`, // Shifted 600px to the left
       });
     };
 
     updateNavPos();
     window.addEventListener('resize', updateNavPos);
-    return () => window.removeEventListener('resize', updateNavPos);
+    window.addEventListener('scroll', updateNavPos);
+    return () => {
+      window.removeEventListener('resize', updateNavPos);
+      window.removeEventListener('scroll', updateNavPos);
+    };
   }, []);
 
   useEffect(() => {
@@ -93,12 +122,6 @@ const CursorFollowingRobot = ({ isScrolled = false }: CursorFollowingRobotProps)
       color: 0x4fa8ff,
       emissive: 0x4fa8ff,
       emissiveIntensity: 0.9,
-    });
-
-    const earMat = new THREE.MeshStandardMaterial({
-      color: 0x2d2d2d,
-      roughness: 0.15,
-      metalness: 0.85,
     });
 
     const pinkMat = new THREE.MeshStandardMaterial({
@@ -290,9 +313,13 @@ const CursorFollowingRobot = ({ isScrolled = false }: CursorFollowingRobotProps)
       return new THREE.Mesh(new THREE.ShapeGeometry(shape), eyeMat);
     };
 
-    eyesGroup.add(createChevron(-0.6));
-    eyesGroup.add(createChevron(0.6));
+    // Create chevron eyes
+    const leftChevron = createChevron(-0.6);
+    const rightChevron = createChevron(0.6);
+    eyesGroup.add(leftChevron);
+    eyesGroup.add(rightChevron);
     eyesGroup.position.set(0, 0.05, bodyDepth / 2 + 0.13);
+    eyesGroup.visible = false; // Start hidden during HELLO
     robotHead.add(eyesGroup);
 
     /* ---------------- V-Shaped Ears on Top ---------------- */
@@ -364,11 +391,10 @@ const CursorFollowingRobot = ({ isScrolled = false }: CursorFollowingRobotProps)
       const t = clock.getElapsedTime();
 
       if (headRef.current) {
-        // More flexible and accurate mouse tracking
-        const targetY = mouse.current.x * 0.4; // Increased from 0.25 for more movement
-        const targetX = mouse.current.y * 0.3; // Increased from 0.18 for more movement
+        const targetY = mouse.current.x * 0.4;
+        const targetX = mouse.current.y * 0.3;
         
-        headRef.current.rotation.y += (targetY - headRef.current.rotation.y) * 0.1; // Increased from 0.06 for faster response
+        headRef.current.rotation.y += (targetY - headRef.current.rotation.y) * 0.1;
         headRef.current.rotation.x += (targetX - headRef.current.rotation.x) * 0.1;
         headRef.current.position.y = Math.sin(t * 1.3) * 0.06;
       }
@@ -387,27 +413,50 @@ const CursorFollowingRobot = ({ isScrolled = false }: CursorFollowingRobotProps)
         containerRef.current.removeChild(renderer.domElement);
       }
     };
-  }, [isScrolled]);
+  }, []);
 
   useEffect(() => {
     if (!eyesRef.current) return;
     eyesRef.current.scale.y = blink ? 0.08 : 1;
   }, [blink]);
 
+  // Control eye visibility based on showHello
+  useEffect(() => {
+    if (!eyesRef.current) return;
+    eyesRef.current.visible = !showHello;
+  }, [showHello]);
+
   return (
     <div 
       className="fixed pointer-events-none z-50 transition-all duration-700 ease-in-out"
       style={{
-        top: !isScrolled ? `${navPos.top}px` : '140px', // FLIPPED: not scrolled = navbar, scrolled = hero
-        left: !isScrolled ? navPos.left : '50%',
-        transform: !isScrolled
-          ? 'translate(-50%, -50%) scale(0.28)'
-          : 'translate(-50%, 0) scale(1)',
-        width: '280px',
-        height: '280px',
+        top: showHello ? '50%' : `${navPos.top}px`,
+        left: showHello ? '50%' : navPos.left,
+        transform: showHello 
+          ? 'translate(-50%, -50%) scale(0.8)' 
+          : 'translate(-50%, -50%) scale(0.35)',
+        width: isMobile ? '120px' : '200px',
+        height: isMobile ? '120px' : '200px',
       }}
     >
       <div ref={containerRef} className="w-full h-full" />
+      
+      {/* HELLO Text Overlay */}
+      {showHello && (
+        <div 
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+          style={{ 
+            fontSize: isMobile ? '14px' : '20px',
+            fontWeight: 'bold',
+            color: '#4fa8ff',
+            textShadow: '0 0 10px #4fa8ff, 0 0 20px #4fa8ff',
+            letterSpacing: '2px',
+            animation: 'pulse 1s ease-in-out infinite'
+          }}
+        >
+          HELLO
+        </div>
+      )}
     </div>
   );
 };
