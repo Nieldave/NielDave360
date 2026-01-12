@@ -7,10 +7,9 @@ const Skills = () => {
       icon: Code,
       skills: [
         { name: 'Python', level: 90 },
-        { name: 'Java', level: 85 },
-        { name: 'C++', level: 75 },
-        { name: 'JavaScript', level: 88 },
-        { name: 'TypeScript', level: 82 },
+        { name: 'Java', level: 90 },
+        { name: 'JavaScript', level: 78 },
+        { name: 'TypeScript', level: 72 },
       ],
     },
     {
@@ -21,29 +20,28 @@ const Skills = () => {
         { name: 'HTML/CSS', level: 95 },
         { name: 'Bootstrap', level: 85 },
         { name: 'Tailwind CSS', level: 88 },
-        { name: 'Next.js', level: 75 },
       ],
     },
     {
       title: 'Backend Development',
       icon: Database,
       skills: [
-        { name: 'Node.js', level: 85 },
-        { name: 'Express.js', level: 82 },
-        { name: 'Flask', level: 88 },
+        { name: 'Spring', level: 85 },
+        { name: 'Hibernate', level: 82 },
+        { name: 'Servlets', level: 88 },
         { name: 'Django', level: 75 },
-        { name: 'Spring Boot', level: 70 },
+        { name: 'Flask', level: 70 },
       ],
     },
     {
       title: 'Cloud & Databases',
       icon: Cloud,
       skills: [
-        { name: 'AWS', level: 80 },
-        { name: 'Firebase', level: 85 },
+        // { name: 'AWS', level: 80 },
         { name: 'MySQL', level: 88 },
         { name: 'MongoDB', level: 82 },
-        { name: 'PostgreSQL', level: 78 },
+        { name: 'PL?SQL', level: 85 },
+        { name: 'Firebase', level: 80 },
       ],
     },
     {
@@ -53,8 +51,8 @@ const Skills = () => {
         { name: 'TensorFlow', level: 85 },
         { name: 'PyTorch', level: 82 },
         { name: 'Scikit-learn', level: 88 },
-        { name: 'OpenCV', level: 78 },
-        { name: 'BERT/Transformers', level: 75 },
+        { name: 'Pandas', level: 88 },
+        // { name: 'BERT/Transformers', level: 75 },
       ],
     },
     {
@@ -64,7 +62,6 @@ const Skills = () => {
         { name: 'Git/GitHub', level: 92 },
         { name: 'Docker', level: 78 },
         { name: 'Jenkins', level: 75 },
-        { name: 'CI/CD', level: 82 },
         { name: 'Selenium', level: 85 },
       ],
     },
@@ -74,7 +71,7 @@ const Skills = () => {
     'Linux Kernel Development',
     'AWS Educate - Introduction to Cloud',
     'Jira Work Management Fundamentals',
-    'JSpiders JAVA Full Stack + GenAI Course',
+    'JAVA Full Stack + GenAI Course',
   ];
 
   return (
