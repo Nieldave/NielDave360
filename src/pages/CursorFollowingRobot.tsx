@@ -11,7 +11,7 @@ const CursorFollowingRobot = ({ isScrolled = false }: CursorFollowingRobotProps)
   const eyesRef = useRef<THREE.Group | null>(null);
   const mouse = useRef({ x: 0, y: 0 });
   const [blink, setBlink] = useState(false);
-  const [navPos, setNavPos] = useState({ top: 12, left: '50%' });
+  const [navPos, setNavPos] = useState({ top: 30, left: '50%' });
   const [isMobile, setIsMobile] = useState(false);
   const [showHello, setShowHello] = useState(true);
   const [hasShownHello, setHasShownHello] = useState(false);
@@ -46,8 +46,9 @@ const CursorFollowingRobot = ({ isScrolled = false }: CursorFollowingRobotProps)
     const updateNavPos = () => {
       const rect = nav.getBoundingClientRect();
       // Position at the vertical center of navbar, shifted left
+      // Added 10px down for better positioning
       setNavPos({
-        top: rect.top + rect.height / 2,
+        top: rect.top + rect.height / 2 + 10,
         left: `${rect.left + rect.width / 2 - 600}px`, // Shifted 600px to the left
       });
     };
@@ -439,24 +440,26 @@ const CursorFollowingRobot = ({ isScrolled = false }: CursorFollowingRobotProps)
         height: isMobile ? '120px' : '200px',
       }}
     >
-      <div ref={containerRef} className="w-full h-full" />
-      
-      {/* HELLO Text Overlay */}
-      {showHello && (
-        <div 
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-          style={{ 
-            fontSize: isMobile ? '14px' : '20px',
-            fontWeight: 'bold',
-            color: '#4fa8ff',
-            textShadow: '0 0 10px #4fa8ff, 0 0 20px #4fa8ff',
-            letterSpacing: '2px',
-            animation: 'pulse 1s ease-in-out infinite'
-          }}
-        >
-          HELLO
-        </div>
-      )}
+      <div className="relative w-full h-full">
+        <div ref={containerRef} className="w-full h-full" />
+        
+        {/* HELLO Text Overlay */}
+        {showHello && (
+          <div 
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{ 
+              fontSize: isMobile ? '14px' : '20px',
+              fontWeight: 'bold',
+              color: '#4fa8ff',
+              textShadow: '0 0 10px #4fa8ff, 0 0 20px #4fa8ff',
+              letterSpacing: '2px',
+              animation: 'pulse 1s ease-in-out infinite'
+            }}
+          >
+            HELLO
+          </div>
+        )}
+      </div>
     </div>
   );
 };
