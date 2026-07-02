@@ -3,18 +3,34 @@ import { Calendar, MapPin, Briefcase } from 'lucide-react';
 const Experience = () => {
   const experiences = [
     {
-      title: 'Intern',
+      title: 'Data Analyst',
+      company: 'Volvo Group',
+      location: 'Bengaluru',
+      duration: 'Mar 2026 – Present',
+      description: [
+        'Collected, cleaned, and transformed large datasets from multiple business systems using Python (Pandas), SQL, and Power Query to ensure data quality and consistency',
+        'Designed interactive Power BI dashboards and reports using DAX, enabling stakeholders to monitor KPIs and operational performance',
+        'Automated recurring reporting and approval workflows using Power Automate, reducing manual effort and improving efficiency',
+        'Performed ETL operations and developed reusable Python scripts for data validation, duplicate removal, and report generation',
+        'Wrote optimized SQL queries to extract, join, aggregate, and analyze data from relational databases',
+        'Built data models in Power BI by defining relationships, calculated columns, and measures for accurate reporting',
+      ],
+      current: true,
+    },
+    {
+      title: 'Software Engineering Intern',
       company: 'Indian Institute of Science (IISc)',
       location: 'Bengaluru',
       duration: 'Feb 2025 – May 2025',
       description: [
-        'Developed "MagicMirror²", an AI-powered personalized fashion advisor using OpenCV and TensorFlow',
-        'Built recommendation system for outfits based on weather, occasion, and user preferences',
-        'Integrated Firebase for user authentication and Google Cloud for hosting and scalability',
-        'Integrated Gemini LLM and OpenCV/ArcFace for personalized UX; set up A/B testing for behavior modeling',
-        'Developed cloud-connected CI/CD pipelines',
+        'Developed cloud-enabled backend services for the MagicMirror² Digital Wardrobe using Flask, Firebase Firestore, and Firebase Storage',
+        'Designed a scalable NoSQL database architecture supporting personalized wardrobe management for multiple users and family profiles',
+        'Built REST APIs and WebSocket communication for real-time synchronization between backend services and the React frontend',
+        'Integrated cloud storage, image preprocessing (OpenCV, rembg), and authentication workflows to automate wardrobe management',
+        'Collaborated on AI integration by connecting wardrobe metadata with facial recognition (ArcFace) and Gemini LLM-based outfit recommendations',
+        'Improved application scalability, data organization, and retrieval efficiency through optimized Firestore collections and cloud storage design',
       ],
-      current: true,
+      current: false,
     },
     {
       title: 'Test Engineer',
