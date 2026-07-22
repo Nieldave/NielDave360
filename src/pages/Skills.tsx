@@ -1,79 +1,92 @@
-import { Code, Database, Cloud, Shield, Wrench, GitBranch } from 'lucide-react';
+import { Code, Database, Cloud, Brain, Wrench, Server, BarChart3 } from 'lucide-react';
+
+const skillCategories = [
+  {
+    title: 'Programming Languages',
+    icon: Code,
+    skills: [
+      { name: 'Java', level: 92 },
+      { name: 'Python', level: 90 },
+      { name: 'JavaScript', level: 80 },
+      { name: 'C#', level: 90 },
+    ],
+  },
+
+  {
+    title: 'Backend Development',
+    icon: Server,
+    skills: [
+      { name: 'Spring Boot', level: 90 },
+      { name: 'Spring Security', level: 86 },
+      { name: 'Hibernate / JPA', level: 85 },
+      { name: '.NET', level: 72 },
+    ],
+  },
+
+  {
+    title: 'Databases',
+    icon: Database,
+    skills: [
+      { name: 'MySQL', level: 92 },
+      { name: 'MongoDB', level: 84 },
+      { name: 'Firebase Firestore', level: 88 },
+      { name: 'PL/SQL', level: 86 },
+    ],
+  },
+
+  {
+    title: 'Cloud Technologies',
+    icon: Cloud,
+    skills: [
+      { name: 'AWS S3', level: 84 },
+      { name: 'AWS Lambda', level: 80 },
+      { name: 'Microsoft Azure', level: 78 },
+      { name: 'Firebase', level: 90 },
+    ],
+  },
+
+  {
+    title: 'AI / Machine Learning',
+    icon: Brain,
+    skills: [
+      { name: 'TensorFlow', level: 86 },
+      { name: 'PyTorch', level: 82 },
+      { name: 'Scikit-learn', level: 88 },
+      { name: 'OpenCV', level: 85 },
+    ],
+  },
+
+  {
+    title: 'Data Analytics',
+    icon: BarChart3,
+    skills: [
+      { name: 'Power BI', level: 88 },
+      { name: 'Power Automate', level: 84 },
+      { name: 'Dataverse', level: 82 },
+      { name: 'Pandas', level: 88 },
+    ],
+  },
+
+  {
+    title: 'DevOps & Tools',
+    icon: Wrench,
+    skills: [
+      { name: 'Git & GitHub', level: 92 },
+      { name: 'Docker', level: 82 },
+      { name: 'Kubernetes', level: 76 },
+      { name: 'MLflow', level: 82 },
+    ],
+  },
+];
+
+const certifications = [
+  'Linux Kernel Development',
+  'AWS Educate - Introduction to Cloud',
+  'Java Full Stack + GenAI',
+  'Jira Work Management Fundamentals',
+];
 
 const Skills = () => {
-  const skillCategories = [
-    {
-      title: 'Programming Languages',
-      icon: Code,
-      skills: [
-        { name: 'Python', level: 90 },
-        { name: 'Java', level: 90 },
-        { name: 'JavaScript', level: 78 },
-        { name: 'TypeScript', level: 72 },
-      ],
-    },
-    {
-      title: 'Frontend Development',
-      icon: Code,
-      skills: [
-        { name: 'React.js', level: 90 },
-        { name: 'HTML/CSS', level: 95 },
-        { name: 'Bootstrap', level: 85 },
-        { name: 'Tailwind CSS', level: 88 },
-      ],
-    },
-    {
-      title: 'Backend Development',
-      icon: Database,
-      skills: [
-        { name: 'Spring', level: 85 },
-        { name: 'Hibernate', level: 82 },
-        { name: 'Servlets', level: 88 },
-        { name: 'Django', level: 75 },
-        { name: 'Flask', level: 70 },
-      ],
-    },
-    {
-      title: 'Cloud & Databases',
-      icon: Cloud,
-      skills: [
-        // { name: 'AWS', level: 80 },
-        { name: 'MySQL', level: 88 },
-        { name: 'MongoDB', level: 82 },
-        { name: 'PL/SQL', level: 85 },
-        { name: 'Firebase', level: 80 },
-      ],
-    },
-    {
-      title: 'AI/ML & Data Science',
-      icon: Shield,
-      skills: [
-        { name: 'TensorFlow', level: 85 },
-        { name: 'PyTorch', level: 82 },
-        { name: 'Scikit-learn', level: 88 },
-        { name: 'Pandas', level: 88 },
-        // { name: 'BERT/Transformers', level: 75 },
-      ],
-    },
-    {
-      title: 'DevOps & Tools',
-      icon: Wrench,
-      skills: [
-        { name: 'Git/GitHub', level: 92 },
-        { name: 'Docker', level: 78 },
-        { name: 'Jenkins', level: 75 },
-        { name: 'Selenium', level: 85 },
-      ],
-    },
-  ];
-
-  const certifications = [
-    'Linux Kernel Development',
-    'AWS Educate - Introduction to Cloud',
-    'Jira Work Management Fundamentals',
-    'JAVA Full Stack + GenAI Course',
-  ];
-
   return (
     <div className="min-h-screen py-20">
       <div className="container mx-auto px-4">
@@ -116,7 +129,7 @@ const Skills = () => {
                     <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
                       <div
                         className="h-full bg-gradient-primary rounded-full transition-all duration-1000 ease-out"
-                        style={{ 
+                        style={{
                           width: `${skill.level}%`,
                           animationDelay: `${(index * 0.1) + (i * 0.05)}s`
                         }}
@@ -156,16 +169,24 @@ const Skills = () => {
           </h3>
           <div className="flex flex-wrap justify-center gap-3">
             {[
-              'Agile/Scrum',
-              'A/B Testing',
-              'Penetration Testing',
-              'OWASP ZAP',
-              'Burp Suite',
-              'Wireshark',
-              'GitLab',
-              'JIRA',
+              'Data Structures & Algorithms',
+              'System Design',
+              'Microservices',
+              'JWT Authentication',
+              'Spring MVC',
+              'Spring Data JPA',
+              'WebSockets',
+              'Firebase Authentication',
+              'Power BI',
+              'Power Automate',
+              'Dataverse',
+              'OpenCV',
               'MLflow',
-              'NLP',
+              'Git',
+              'JIRA',
+              'Agile/Scrum',
+              'Linux',
+              'CI/CD',
             ].map((skill, index) => (
               <span
                 key={index}
